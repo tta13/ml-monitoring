@@ -7,9 +7,9 @@ import os
 import pickle
 from .models import Record, Prediction
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-model_path = os.path.join(dir_path, '..', '..', '..', 'model.pkl')
-with open(model_path, 'rb') as file:
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'model.pkl')
+with open(MODEL_PATH, 'rb') as file:
   model = pickle.load(file)
 
 router = APIRouter(prefix="/performance")
@@ -22,7 +22,7 @@ router = APIRouter(prefix="/performance")
   (a) A volumetria (quantidade de registros) para cada mês presente na lista de registros; \
   (b)  performance do modelo pré-treinado neste conjunto de registros, indicada pelo valor da área sob a curva ROC.",
 )
-def get_prediction(request: list[Record]):
+def get_performance(request: list[Record]):
   request = [r.dict() for r in request]
   records = pd.DataFrame.from_records(request)
   records = records.fillna(np.NaN)

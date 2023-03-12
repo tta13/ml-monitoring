@@ -128,3 +128,10 @@ class Prediction(BaseModel):
     mes: int
     volumetria: int
     performance: float
+
+class Path(BaseModel):
+    path: str
+
+class Adherence(BaseModel):
+    statistic: float
+    p_value: float
