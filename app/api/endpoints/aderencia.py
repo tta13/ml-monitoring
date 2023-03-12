@@ -5,19 +5,15 @@ import gzip
 import pandas as pd
 from .models import Path, Adherence
 from scipy.stats import ks_2samp
-import pickle
+from .model import MODEL
 import numpy as np
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 TEST_DATA_PATH = os.path.join(DIR_PATH, '..', '..', 'datasets', 'credit_01', 'test.gz')
 with gzip.open(TEST_DATA_PATH, 'r') as file:
   test_data = pd.read_csv(file)
-# Tive que retreinar o modelo, pois estava recebendo um erro (ver arquivo fix_model_error.ipynb)
-MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'fixed_model.pkl')
-with open(MODEL_PATH, 'rb') as file:
-  model = pickle.load(file)
 
-test_data['SCORE'] = model.predict_proba(test_data)[:, 1]
+test_data['SCORE'] = MODEL.predict_proba(test_data)[:, 1]
 
 router = APIRouter(prefix="/aderencia")
 
@@ -42,7 +38,7 @@ def get_adherence(request: Path):
     raise HTTPException(status_code=400, detail="Unsupported file extension")
   
   data = data.fillna(np.NaN)
-  data['SCORE'] = model.predict_proba(data)[:, 1]
+  data['SCORE'] = MODEL.predict_proba(data)[:, 1]
 
   result = ks_2samp(test_data['SCORE'], data['SCORE'])
   

@@ -3,15 +3,8 @@ from fastapi import APIRouter
 import pandas as pd
 import numpy as np
 from sklearn.metrics import roc_auc_score
-import os
-import pickle
 from .models import Record, Prediction
-
-DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-# Tive que retreinar o modelo, pois estava recebendo um erro (ver arquivo fix_model_error.ipynb)
-MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'fixed_model.pkl')
-with open(MODEL_PATH, 'rb') as file:
-  model = pickle.load(file)
+from .model import MODEL
 
 router = APIRouter(prefix="/performance")
 
@@ -36,6 +29,6 @@ def get_performance(request: list[Record]):
   response = []
   for key in month_groups:
     y_true = month_groups[key]["TARGET"]
-    y_pred = model.predict_proba(month_groups[key])[:, 1]
+    y_pred = MODEL.predict_proba(month_groups[key])[:, 1]
     response.append(Prediction(**{ "mes": key, "volumetria": len(month_groups[key]), "performance": roc_auc_score(y_true, y_pred) }))
   return response
