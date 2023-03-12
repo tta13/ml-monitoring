@@ -1,6 +1,10 @@
 # Monitoramento de modelos de _machine learning_
 API para avaliação de aderência e performance
 
+Implementação da API e instruções de execução: [App](./app/)
+
+Notebook com os testes das rotas: [main.ipynb](./main.ipynb)
+
 ## Descrição do projeto
 Uma ferramenta para monitoramento de um modelo de concessão de crédito contendo os seguintes *endpoints*
 
