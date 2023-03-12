@@ -8,7 +8,8 @@ import pickle
 from .models import Record, Prediction
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'model.pkl')
+# Tive que retreinar o modelo, pois estava recebendo um erro (ver arquivo fix_model_error.ipynb)
+MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'fixed_model.pkl')
 with open(MODEL_PATH, 'rb') as file:
   model = pickle.load(file)
 

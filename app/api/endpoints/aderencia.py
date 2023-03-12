@@ -12,7 +12,8 @@ DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 TEST_DATA_PATH = os.path.join(DIR_PATH, '..', '..', 'datasets', 'credit_01', 'test.gz')
 with gzip.open(TEST_DATA_PATH, 'r') as file:
   test_data = pd.read_csv(file)
-MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'model.pkl')
+# Tive que retreinar o modelo, pois estava recebendo um erro (ver arquivo fix_model_error.ipynb)
+MODEL_PATH = os.path.join(DIR_PATH, '..', '..', 'fixed_model.pkl')
 with open(MODEL_PATH, 'rb') as file:
   model = pickle.load(file)
 
